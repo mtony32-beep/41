@@ -1,0 +1,41 @@
+name: Bangun APK Gradle-9.3.1 Tanpa Tanda Tangan
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil semua kode & berkas
+        uses: actions/checkout@v4
+
+      - name: Pasang Java yang cocok
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Pasang & paksa gunakan Gradle 9.3.1
+        run: |
+          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-9.3.1-bin.zip" > gradle/wrapper/gradle-wrapper.properties
+          rm -f gradle/wrapper/gradle-wrapper.jar
+          wget -P gradle/wrapper/ https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.jar
+          chmod +x gradlew
+
+      - name: Buat kunci debug sementara agar proses berjalan lancar
+        run: |
+          keytool -genkey -v -keystore debug.keystore -alias androiddebugkey \
+          -keyalg RSA -keysize 2048 -validity 10000 \
+          -storepass android -keypass android \
+          -dname "CN=Android Debug, OU=Android, O=Android, L=Unknown, S=Unknown, C=US"
+
+      - name: Bangun APK murni tanpa tanda tangan resmi
+        run: ./gradlew assembleDebug --no-build-cache
+
+      - name: Simpan APK siap diunduh
+        uses: actions/upload-artifact@v4
+        with:
+          name: APK-Gradle9.3.1-TanpaTandaTangan
+          path: app/build/outputs/apk/debug/app-debug.apk

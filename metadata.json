@@ -1,0 +1,6 @@
+{
+  "name": "rerev7",
+  "description": "Mobile AI Studio + Github + Termux IDE with Cloud Build, Auto Fix, Postman API Tester, DB Viewer, and Gemini Assistant",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

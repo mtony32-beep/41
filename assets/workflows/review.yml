@@ -1,0 +1,27 @@
+name: AI Code Reviewer
+
+on:
+  workflow_run:
+    workflows: ["Android Cloud Build"]
+    types: [completed]
+
+jobs:
+  ai-review:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Extract Git Diff
+        run: |
+          git diff HEAD~1 HEAD > latest_commit.diff || git diff > latest_commit.diff
+          echo "Diff generated for Gemini review"
+
+      - name: Gemini Senior Android Review
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "Triggering AI Senior Android Review prompt: 'Kamu Senior Android Dev. Review kode ini. Beri 3 saran perbaikan, cari potensi memory leak, dan kasih skor Code Quality 1-10. Bahasa Indonesia'"

@@ -1,0 +1,16 @@
+{
+  "id": "blank",
+  "name": "Blank Compose App",
+  "description": "Minimal Android Compose Starter Template",
+  "mainClass": "MainActivity.kt",
+  "files": [
+    {
+      "path": "app/src/main/java/com/example/MainActivity.kt",
+      "content": "package com.example\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\nimport androidx.activity.compose.setContent\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.material3.*\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\n\nclass MainActivity : ComponentActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContent {\n            MaterialTheme {\n                Surface(modifier = Modifier.fillMaxSize()) {\n                    Box(contentAlignment = Alignment.Center) {\n                        Text(\"Hello rerev7 Blank Project!\", style = MaterialTheme.typography.headlineMedium)\n                    }\n                }\n            }\n        }\n    }\n}"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "content": "plugins {\n    alias(libs.plugins.android.application)\n    alias(libs.plugins.kotlin.compose)\n}\n\nandroid {\n    namespace = \"com.example\"\n    compileSdk = 34\n    defaultConfig {\n        applicationId = \"com.example.blank\"\n        minSdk = 24\n        targetSdk = 34\n        versionCode = 1\n        versionName = \"1.0\"\n    }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Auto-Fix Pipeline
+
+on:
+  workflow_run:
+    workflows: ["Android Cloud Build"]
+    types: [completed]
+
+jobs:
+  auto-fix:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Failure Logs
+        run: |
+          echo "Fetching workflow run logs for run ID: ${{ github.event.workflow_run.id }}"
+          mkdir -p build_logs
+          echo "Build failed on commit: ${{ github.event.workflow_run.head_sha }}" > build_logs/summary.txt
+
+      - name: Request Gemini Auto-Fix Analysis
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "AutoFix Service triggered for rerev7 Android IDE"

@@ -1,0 +1,12 @@
+{
+  "id": "api-app",
+  "name": "REST API & Network Client App",
+  "description": "Network integration with Retrofit, OkHttp, and Coroutines",
+  "mainClass": "MainActivity.kt",
+  "files": [
+    {
+      "path": "app/src/main/java/com/example/MainActivity.kt",
+      "content": "package com.example\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\nimport androidx.activity.compose.setContent\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.lazy.LazyColumn\nimport androidx.compose.material3.*\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.unit.dp\n\nclass MainActivity : ComponentActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContent {\n            MaterialTheme {\n                Scaffold(topBar = { TopAppBar(title = { Text(\"API Explorer\") }) }) {\n                    LazyColumn(modifier = Modifier.fillMaxSize().padding(it)) {\n                        item {\n                            Card(modifier = Modifier.fillMaxWidth().padding(16.dp)) {\n                                Column(modifier = Modifier.padding(16.dp)) {\n                                    Text(\"Endpoint: https://api.github.com\", style = MaterialTheme.typography.titleMedium)\n                                    Spacer(modifier = Modifier.height(8.dp))\n                                    Text(\"Status: 200 OK (Connected)\", style = MaterialTheme.typography.bodyMedium)\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}"
+    }
+  ]
+}
